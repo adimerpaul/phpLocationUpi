@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidad – PuntoGo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, #07304F 0%, #0D5C8C 60%, #1A85C2 100%);
+      color: #fff;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+
+    header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; }
+    header p  { margin-top: 8px; opacity: .85; font-size: .95rem; }
+
+    main {
+      max-width: 780px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #07304F;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e8f0f7;
+    }
+
+    p  { margin-bottom: 10px; font-size: .97rem; }
+    ul { margin: 8px 0 10px 20px; }
+    li { margin-bottom: 6px; font-size: .97rem; }
+
+    .badge {
+      display: inline-block;
+      background: #e8f0f7;
+      color: #07304F;
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-size: .82rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    a { color: #0D5C8C; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: .82rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PuntoGo</h1>
+  <p>Política de Privacidad</p>
+</header>
+
+<main>
+
+  <div class="card">
+    <span class="badge">Última actualización: 23 de mayo de 2025</span>
+    <p>
+      Esta Política de Privacidad describe cómo <strong>PuntoGo</strong>
+      (<code>com.puntogo.app</code>) recopila, usa y protege la información
+      de sus usuarios. Al usar la aplicación, aceptas las condiciones descritas
+      en este documento.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>1. Información que recopilamos</h2>
+    <p>PuntoGo recopila únicamente la información necesaria para su funcionamiento:</p>
+    <ul>
+      <li><strong>Datos de cuenta:</strong> nombre de usuario, nombre completo, cargo y domicilio que el usuario registra voluntariamente.</li>
+      <li><strong>Ubicación geográfica:</strong> coordenadas GPS (latitud y longitud) cuando el usuario registra un punto en el mapa. La ubicación se solicita solo en el momento del registro y con consentimiento explícito.</li>
+      <li><strong>Imágenes:</strong> fotos tomadas con la cámara o seleccionadas de la galería del dispositivo, adjuntadas voluntariamente a un punto del mapa.</li>
+      <li><strong>Token de sesión:</strong> un token JWT almacenado localmente para mantener la sesión iniciada.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>2. Cómo usamos la información</h2>
+    <ul>
+      <li>Autenticar al usuario y mantener su sesión activa.</li>
+      <li>Mostrar en el mapa los puntos de ubicación registrados por el usuario.</li>
+      <li>Asociar imágenes a los puntos de ubicación registrados.</li>
+      <li>Permitir al usuario gestionar (crear, editar, eliminar) sus propios registros.</li>
+    </ul>
+    <p>No usamos la información para publicidad, análisis de comportamiento ni la compartimos con terceros.</p>
+  </div>
+
+  <div class="card">
+    <h2>3. Permisos que solicitamos</h2>
+    <ul>
+      <li><strong>Ubicación (ACCESS_FINE_LOCATION / ACCESS_COARSE_LOCATION):</strong> para obtener las coordenadas GPS al registrar un punto. Solo se activa cuando el usuario lo solicita.</li>
+      <li><strong>Cámara (CAMERA):</strong> para tomar fotos y adjuntarlas a un punto del mapa.</li>
+      <li><strong>Almacenamiento / Multimedia (READ_MEDIA_IMAGES):</strong> para seleccionar imágenes existentes de la galería.</li>
+      <li><strong>Internet (INTERNET):</strong> para comunicarse con el servidor y guardar / recuperar datos.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>4. Almacenamiento y seguridad</h2>
+    <p>
+      Los datos se almacenan en un servidor bajo control del desarrollador.
+      Las contraseñas se guardan cifradas mediante <code>bcrypt</code>.
+      La comunicación entre la app y el servidor se realiza mediante HTTPS.
+      Los tokens de sesión se invalidan al cerrar sesión.
+    </p>
+    <p>
+      Las imágenes se convierten y almacenan en formato WebP en el servidor
+      para reducir el uso de almacenamiento.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>5. Compartición de datos</h2>
+    <p>
+      <strong>No vendemos ni compartimos</strong> los datos personales de los usuarios
+      con terceros, anunciantes ni servicios de análisis externos.
+      Los datos solo se utilizan internamente para el funcionamiento de la aplicación.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>6. Retención y eliminación de datos</h2>
+    <p>
+      El usuario puede solicitar la eliminación de su cuenta y todos sus datos
+      asociados (ubicaciones e imágenes) enviando un correo electrónico al
+      desarrollador. Los datos se eliminarán en un plazo máximo de 30 días.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>7. Privacidad de menores</h2>
+    <p>
+      PuntoGo no está dirigida a menores de 13 años. No recopilamos
+      conscientemente información de menores. Si detectamos que un menor ha
+      proporcionado datos personales, los eliminaremos de inmediato.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>8. Cambios en esta política</h2>
+    <p>
+      Podemos actualizar esta política ocasionalmente. Los cambios se notificarán
+      actualizando la fecha indicada al inicio de este documento. Te recomendamos
+      revisarla periódicamente.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>9. Contacto</h2>
+    <p>Si tienes preguntas sobre esta política de privacidad, escríbenos a:</p>
+    <p>
+      📧 <a href="mailto:adimer101@gmail.com">adimer101@gmail.com</a>
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2025 PuntoGo · <a href="mailto:adimer101@gmail.com">adimer101@gmail.com</a>
+</footer>
+
+</body>
+</html>
