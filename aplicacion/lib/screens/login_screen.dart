@@ -260,27 +260,10 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Widget _buildLogo() {
-    return Column(
-      children: [
-        Container(
-          width: 72, height: 72,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white24,
-            border: Border.all(color: Colors.white38, width: 2),
-          ),
-          child: const Icon(Icons.location_on, color: Colors.white, size: 38),
-        ),
-        const SizedBox(height: 10),
-        RichText(
-          text: const TextSpan(
-            children: [
-              TextSpan(text: 'mapa', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: Colors.white)),
-              TextSpan(text: 'app', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w300, color: Colors.white70)),
-            ],
-          ),
-        ),
-      ],
+    return Image.asset(
+      'assets/logo.png',
+      height: 160,
+      fit: BoxFit.contain,
     );
   }
 
