@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MapaApp – Acceso</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bd: #07304f;
+      --bm: #0d5c8c;
+      --bl: #1a85c2;
+      --w20: rgba(255,255,255,.18);
+      --w30: rgba(255,255,255,.28);
+      --w50: rgba(255,255,255,.50);
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: linear-gradient(155deg, var(--bd) 0%, var(--bm) 50%, var(--bl) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #fff;
+      padding: 1.6rem 1.4rem 1.2rem;
+    }
+
+    /* ── Top nav ── */
+    .nav { width: 100%; }
+    .nav svg { width: 26px; height: 26px; fill: rgba(255,255,255,.85); }
+
+    /* ── Logo ── */
+    .logo {
+      display: flex; flex-direction: column; align-items: center; gap: .6rem;
+      margin: .5rem 0 1.4rem;
+    }
+    .logo-pin {
+      width: 80px; height: 80px;
+      filter: drop-shadow(0 4px 14px rgba(0,0,0,.35));
+    }
+    .logo h1 {
+      font-size: 1.9rem; font-weight: 800; letter-spacing: -1px;
+    }
+    .logo h1 span { font-weight: 300; }
+
+    /* ── Card ── */
+    .card { width: 100%; max-width: 420px; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex; background: var(--w20);
+      border-radius: 50px; padding: 4px; margin-bottom: 1.3rem;
+    }
+    .tab {
+      flex: 1; padding: .6rem; border: none; background: transparent;
+      color: var(--w50); font-size: .9rem; font-weight: 600;
+      border-radius: 50px; cursor: pointer; transition: all .22s;
+    }
+    .tab.active { background: #fff; color: var(--bm); }
+
+    /* ── Alert ── */
+    .alert {
+      padding: .7rem 1rem; border-radius: 10px; font-size: .88rem;
+      text-align: center; margin-bottom: 1rem; display: none; animation: fadeIn .2s;
+    }
+    .alert.err { background: rgba(211,47,47,.28); border: 1px solid rgba(255,100,100,.35); }
+    .alert.ok  { background: rgba(46,125,50,.28);  border: 1px solid rgba(100,200,100,.35); }
+    .alert.show { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; } }
+
+    /* ── Inputs ── */
+    .fg { margin-bottom: .9rem; }
+    .fg label { display: block; font-size: .82rem; font-weight: 600; opacity: .9; margin-bottom: .3rem; }
+    .iw { position: relative; }
+    .fg input {
+      width: 100%; padding: .82rem 1rem; background: var(--w20);
+      border: 1.5px solid var(--w30); border-radius: 12px;
+      color: #fff; font-size: 1rem; outline: none; transition: border .2s, background .2s;
+    }
+    .fg input::placeholder { color: var(--w50); }
+    .fg input:focus { border-color: #fff; background: var(--w30); }
+    .eye {
+      position: absolute; right: .9rem; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--w50);
+      display: flex; align-items: center; padding: 0;
+    }
+    .eye svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* ── Links ── */
+    .links { display: flex; justify-content: center; gap: 1.2rem; margin: .4rem 0 .9rem; }
+    .links a { color: var(--w50); text-decoration: none; font-size: .8rem; }
+    .links a:hover { color: #fff; }
+
+    /* ── Submit ── */
+    .btn {
+      width: 100%; padding: .9rem; margin-top: .3rem;
+      background: #fff; color: var(--bm);
+      font-size: 1rem; font-weight: 700; letter-spacing: .4px;
+      border: none; border-radius: 50px; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0,0,0,.22);
+      transition: opacity .2s, transform .1s;
+    }
+    .btn:hover { opacity: .92; }
+    .btn:active { transform: scale(.98); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
+
+    /* ── Footer ── */
+    .footer {
+      width: 100%; display: flex; justify-content: space-between; padding-top: .8rem;
+    }
+    .fbtn {
+      background: none; border: none; color: var(--w50);
+      font-size: .78rem; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: .3rem;
+    }
+    .fbtn svg { width: 30px; height: 30px; fill: var(--w50); }
+    .fbtn:hover { color: #fff; }
+    .fbtn:hover svg { fill: #fff; }
+
+    /* spinner inside btn */
+    .spin {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid var(--bm); border-top-color: transparent;
+      border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (min-width: 480px) { body { padding: 2.5rem 2rem; } }
+  </style>
+</head>
+<body>
+
+<!-- Top nav -->
+<div class="nav">
+  <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+</div>
+
+<!-- Logo + Card -->
+<div style="width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;">
+
+  <div class="logo">
+    <!-- SVG pin logo -->
+    <svg class="logo-pin" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="rgba(255,255,255,.95)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,.75)"/>
+        </linearGradient>
+      </defs>
+      <path d="M50 4 C28 4 10 22 10 44 C10 72 50 116 50 116 C50 116 90 72 90 44 C90 22 72 4 50 4Z"
+            fill="url(#pg)" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
+      <circle cx="50" cy="42" r="18" fill="#1a85c2"/>
+      <circle cx="50" cy="42" r="10" fill="white" opacity=".9"/>
+    </svg>
+    <h1>mapa<span>app</span></h1>
+  </div>
+
+  <div class="card">
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="t-login" onclick="tab('login')">Iniciar Sesión</button>
+      <button class="tab" id="t-reg"   onclick="tab('reg')">Registrarse</button>
+    </div>
+
+    <!-- Alert -->
+    <div class="alert" id="alert"></div>
+
+    <!-- ── LOGIN ── -->
+    <div id="f-login">
+      <div class="fg">
+        <label>Usuario</label>
+        <input id="l-user" type="text" placeholder="Nombre de usuario" autocomplete="username">
+      </div>
+      <div class="fg">
+        <label>Contraseña</label>
+        <div class="iw">
+          <input id="l-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+          <button class="eye" onclick="togglePw('l-pass',this)" type="button" aria-label="Ver contraseña">
+            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="links">
+        <a href="#">¿Olvidaste tu usuario?</a>
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+      <button class="btn" id="btn-login" onclick="doLogin()">Iniciar Sesión</button>
+    </div>
+
+    <!-- ── REGISTRO ── -->
+    <div id="f-reg" style="display:none">
+      <div class="fg">
+        <label>Nombre completo <span style="color:#ff8;">*</span></label>
+        <input id="r-nombre" type="text" placeholder="Tu nombre">
+      </div>
+      <div class="fg">
+        <label>Usuario <span style="color:#ff8;">*</span></label>
+        <input id="r-usuario" type="text" placeholder="Elige un nombre de usuario" autocomplete="username">
+      </div>
+      <div class="fg">
+        <label>Contraseña <span style="color:#ff8;">*</span></label>
+        <div class="iw">
+          <input id="r-pass" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+          <button class="eye" onclick="togglePw('r-pass',this)" type="button" aria-label="Ver contraseña">
+            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Cargo</label>
+        <input id="r-cargo" type="text" placeholder="Tu cargo (opcional)">
+      </div>
+      <div class="fg">
+        <label>Domicilio</label>
+        <input id="r-domicilio" type="text" placeholder="Tu dirección (opcional)">
+      </div>
+      <button class="btn" id="btn-reg" onclick="doRegistro()">Crear Cuenta</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <button class="fbtn">
+    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+    Encuéntranos
+  </button>
+  <button class="fbtn">
+    <svg viewBox="0 0 24 24"><path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-4h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/></svg>
+    Obtener Ayuda
+  </button>
+</div>
+
+<script>
+  const API = '/mapa/api';
+
+  if (localStorage.getItem('token')) location.href = 'mapa.html';
+
+  function tab(t) {
+    document.getElementById('t-login').classList.toggle('active', t === 'login');
+    document.getElementById('t-reg').classList.toggle('active', t === 'reg');
+    document.getElementById('f-login').style.display = t === 'login' ? '' : 'none';
+    document.getElementById('f-reg').style.display   = t === 'reg'   ? '' : 'none';
+    hideAlert();
+  }
+
+  function showAlert(msg, type) {
+    const el = document.getElementById('alert');
+    el.textContent = msg;
+    el.className = 'alert ' + type + ' show';
+  }
+  function hideAlert() { document.getElementById('alert').className = 'alert'; }
+
+  function togglePw(id, btn) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.style.opacity = inp.type === 'text' ? '1' : '.5';
+  }
+
+  function setBusy(btnId, busy, label) {
+    const b = document.getElementById(btnId);
+    b.disabled = busy;
+    b.innerHTML = busy ? '<span class="spin"></span>' : label;
+  }
+
+  async function doLogin() {
+    const usuario  = document.getElementById('l-user').value.trim();
+    const password = document.getElementById('l-pass').value;
+    if (!usuario || !password) { showAlert('Completa todos los campos', 'err'); return; }
+
+    setBusy('btn-login', true);
+    try {
+      const res  = await fetch(API + '/usuarios/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario, password })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showAlert(data.error || 'Credenciales incorrectas', 'err');
+      } else {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('usuario', JSON.stringify(data.usuario));
+        showAlert('¡Bienvenido ' + data.usuario.nombre + '!', 'ok');
+        setTimeout(() => location.href = 'mapa.html', 700);
+      }
+    } catch { showAlert('Error de conexión con el servidor', 'err'); }
+    finally  { setBusy('btn-login', false, 'Iniciar Sesión'); }
+  }
+
+  async function doRegistro() {
+    const nombre    = document.getElementById('r-nombre').value.trim();
+    const usuario   = document.getElementById('r-usuario').value.trim();
+    const password  = document.getElementById('r-pass').value;
+    const cargo     = document.getElementById('r-cargo').value.trim();
+    const domicilio = document.getElementById('r-domicilio').value.trim();
+
+    if (!nombre || !usuario || !password) {
+      showAlert('Nombre, usuario y contraseña son obligatorios', 'err'); return;
+    }
+
+    setBusy('btn-reg', true);
+    try {
+      const body = { nombre, usuario, password };
+      if (cargo)     body.cargo     = cargo;
+      if (domicilio) body.domicilio = domicilio;
+
+      const res  = await fetch(API + '/usuarios/registro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        const msg = data.error || Object.values(data.errors || {}).join(' · ');
+        showAlert(msg, 'err');
+      } else {
+        showAlert('Cuenta creada. Ahora inicia sesión.', 'ok');
+        setTimeout(() => tab('login'), 1400);
+      }
+    } catch { showAlert('Error de conexión con el servidor', 'err'); }
+    finally  { setBusy('btn-reg', false, 'Crear Cuenta'); }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const loginActive = document.getElementById('f-login').style.display !== 'none';
+    if (loginActive) doLogin(); else doRegistro();
+  });
+</script>
+</body>
+</html>
