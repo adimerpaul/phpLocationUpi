@@ -5,7 +5,15 @@ class AuthMiddleware
 {
     public static function verify(): array
     {
-        $header = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+        // Apache suele eliminar el header Authorization; se leen todas las variantes posibles
+        $header = $_SERVER['HTTP_AUTHORIZATION']
+               ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
+               ?? '';
+
+        if ($header === '' && function_exists('getallheaders')) {
+            $all    = getallheaders();
+            $header = $all['Authorization'] ?? $all['authorization'] ?? '';
+        }
 
         if (!preg_match('/^Bearer\s+(.+)$/i', $header, $matches)) {
             http_response_code(401);
