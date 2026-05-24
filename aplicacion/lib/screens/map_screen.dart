@@ -752,17 +752,27 @@ class _AddSheetState extends State<_AddSheet> {
                       onPressed: _saving
                           ? null
                           : () async {
-                              if (_nombre.text.trim().isEmpty) {
+                              // Cerrar teclado primero — en Android el IME no
+                              // hace commit del texto hasta perder el foco
+                              FocusScope.of(context).unfocus();
+
+                              // Capturar valores ANTES de cualquier setState/rebuild
+                              final nombre = _nombre.text.trim();
+                              final desc   = _desc.text.trim();
+                              final img    = _image;
+
+                              if (nombre.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('El nombre es obligatorio')),
                                 );
                                 return;
                               }
+
                               setState(() => _saving = true);
                               await widget.onSave(
-                                _nombre.text.trim(),
-                                _desc.text.trim().isNotEmpty ? _desc.text.trim() : null,
-                                _image,
+                                nombre,
+                                desc.isNotEmpty ? desc : null,
+                                img,
                               );
                             },
                       child: _saving

@@ -46,14 +46,15 @@ class Ubicacion
     public function create(array $data): int
     {
         $stmt = $this->db->prepare(
-            "INSERT INTO ubicaciones (lat, lng, nombre, descripcion, user_id)
-             VALUES (:lat, :lng, :nombre, :descripcion, :user_id)"
+            "INSERT INTO ubicaciones (lat, lng, nombre, descripcion, url, user_id)
+             VALUES (:lat, :lng, :nombre, :descripcion, :url, :user_id)"
         );
         $stmt->execute([
             'lat'         => $data['lat'],
             'lng'         => $data['lng'],
             'nombre'      => $data['nombre'],
             'descripcion' => $data['descripcion'] ?? null,
+            'url'         => $data['url'] ?? null,
             'user_id'     => $data['user_id'],
         ]);
         return (int) $this->db->lastInsertId();
@@ -63,7 +64,7 @@ class Ubicacion
     {
         $stmt = $this->db->prepare(
             "UPDATE ubicaciones
-             SET lat = :lat, lng = :lng, nombre = :nombre, descripcion = :descripcion
+             SET lat = :lat, lng = :lng, nombre = :nombre, descripcion = :descripcion, url = :url
              WHERE id = :id AND deleted_at IS NULL"
         );
         return $stmt->execute([
@@ -71,6 +72,7 @@ class Ubicacion
             'lng'         => $data['lng'],
             'nombre'      => $data['nombre'],
             'descripcion' => $data['descripcion'] ?? null,
+            'url'         => $data['url'] ?? null,
             'id'          => $id,
         ]);
     }
